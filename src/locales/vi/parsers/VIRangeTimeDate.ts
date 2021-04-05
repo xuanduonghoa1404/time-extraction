@@ -74,19 +74,22 @@ export default class VIRangeTimeDate extends AbstractParserWithWordBoundaryCheck
 
         // return result;
         const result = context.createParsingResult(match.index, match[0]);
-
+        for(let i = 0; i<match.length;i++){
+            console.log("match[" + i + "]: ", match[i]);
+        }
+        // console.log("match[1]", match[1]," match[2]", match[2], " match[3]",match[3])
         let timeStart = parseHHmm(match[TIME_START]);
-        let timeEnd = parseHHmm(match[TIME_END]);
-        let dateUnit = parseDDMMYY(match[DATE_GROUP]);
+        // let timeEnd = parseHHmm(match[TIME_END]);
+        // let dateUnit = parseDDMMYY(match[DATE_GROUP]);
 
         result.start.imply("hour", timeStart.hour);
         result.start.imply("minute", timeStart.minute);
-        result.start.imply("day", dateUnit.d);
-        result.start.imply("month", dateUnit.month);
-        result.start.imply("year", dateUnit.year);
+        // result.start.imply("day", dateUnit.d);
+        // result.start.imply("month", dateUnit.month);
+        // result.start.imply("year", dateUnit.year);
         result.end = result.start.clone();
-        result.end.assign("hour", timeEnd.hour);
-        result.end.assign("minute", timeEnd.minute);
+        // result.end.assign("hour", timeEnd.hour);
+        // result.end.assign("minute", timeEnd.minute);
         console.log("RangeTimeDate");
         return result;
     }

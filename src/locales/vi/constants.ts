@@ -339,13 +339,14 @@ export function parseYear(match: string): number {
 // }
 export const DDMMYY_PATTERN = `(ngày\\s{0,5}${NUMBER_PATTERN})\\s{0,5}(tháng\\s{0,5}${NUMBER_PATTERN})\\s{0,5}(năm\\s{0,5}${NUMBER_PATTERN})\\s{0,5}`;
 // export const HHmm_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
-export const HHmm_PATTERN = `(${NUMBER_PATTERN}\\s{0,5}giờ)\\s{0,5}(${NUMBER_PATTERN}\\s{0,5}phút)\\s{0,5}`;
+export const HHmm_PATTERN = `(${NUMBER_PATTERN}\\s{0,5}giờ)\\s{0,5}(?:(${NUMBER_PATTERN}\\s{0,5}phút)|\\s)\\s{0,5}`;
 const HHMm_REGEX = new RegExp(HHmm_PATTERN, "i");
 const DDMMYY_REGEX = new RegExp(DDMMYY_PATTERN, "i");
 export function parseHHmm(timeunitText): TimeUnits {
     const fragments = {};
     let remainingText = timeunitText;
     let match = HHMm_REGEX.exec(remainingText);
+    console.log("match:", match);
     for(let i= 1; i< match.length;i++){
         collectTimeFragment(fragments, match[i]);
     }
@@ -388,6 +389,9 @@ function collectDateTimeFragment(fragments, match) {
     fragments[unit] = num;
 }
 function collectTimeFragment(fragments, text) {
+    if(text === " " || text === "" || text === undefined) {
+        return;
+    }
     let match = SINGLE_TIME_UNIT_REGEX.exec(text);
     const num = parseNumberPattern(match[1]);
     const unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()];
@@ -395,6 +399,9 @@ function collectTimeFragment(fragments, text) {
     fragments[unit] = num;
 }
 function collectDateFragment(fragments, text) {
+    if(text === " " || text === "" || text === undefined) {
+        return;
+    }
     let match = SINGLE_DATE_UNIT_REGEX.exec(text);
     const num = parseNumberPattern(match[2]);
     const unit = TIME_UNIT_DICTIONARY[match[1].toLowerCase()];
