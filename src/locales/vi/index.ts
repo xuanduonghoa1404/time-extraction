@@ -29,6 +29,7 @@ import VITimeUnitCasualRelativeFormatParser from "./parsers/VITimeUnitCasualRela
 import VITime from "./parsers/VITime";
 import VIRangeTimeDate from "./parsers/VIRangeTimeDate";
 import VIDate from "./parsers/VIDate";
+import VIMergeTimeDate from "./refiners/VIMergeTimeDate";
 
 /**
  * Chrono object configured for parsing *casual* English
@@ -100,7 +101,7 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
                 new VITimeUnitAgoFormatParser(strictMode),
                 new VITimeUnitLaterFormatParser(strictMode),
             ],
-            refiners: [new VIMergeDateTimeRefiner(), new VIMergeDateRangeRefiner()],
+            refiners: [new VIMergeDateTimeRefiner(), new VIMergeDateRangeRefiner(), new VIMergeTimeDate()],
         },
         strictMode
     );

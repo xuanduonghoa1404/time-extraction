@@ -1,6 +1,6 @@
 {
   "name": "chrono-node",
-  "description": "A natural language date parser in Javascript",
+  "description": "A natural language date parser (Vietnamese) in Javascript",
   "homepage": "http://github.com/wanasit/chrono",
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "eslint-config-prettier": "^6.15.0",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "typedoc": "^0.20.25",
@@ -41,6 +42,7 @@
     }
   },
   "scripts": {
+    "start": "nodemon server.ts",
     "build": "tsc -p tsconfig.build.json",
     "document": "typedoc",
     "prepare": "npm run build",
@@ -54,7 +56,12 @@
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "dayjs": "^1.10.0"
+    "body-parser": "^1.19.0",
+    "dayjs": "^1.10.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "request": "^2.88.2",
+    "ts-node": "^9.1.1"
   },
   "eslintConfig": {
     "env": {

@@ -12,6 +12,8 @@ import { assignSimilarDate } from "../../../utils/dayjs";
 const PATTERN = new RegExp(
     "(?:on|vào|bắt đầu từ|từ\\s*?)?" +
         `(${HHmm_PATTERN})` +
+        // "(?:-|/|lúc|\\s*)" +
+        // `(?:${DDMMYY_PATTERN})` +
         "(?:\\s*" +
         "(?:to|\\-|\\–|until|through|till|đến|\\s)\\s*" +
         `(${HHmm_PATTERN})` +
@@ -22,8 +24,8 @@ const PATTERN = new RegExp(
     "i"
 );
 const TIME_START = 1;
-const TIME_END = 2;
-const DATE_GROUP = 3;
+const TIME_END = 4;
+const DATE_GROUP = 7;
 // const DATE_TO_GROUP = 3;
 // const MONTH_NAME_GROUP = 4;
 // const YEAR_GROUP = 5;
@@ -79,17 +81,17 @@ export default class VIRangeTimeDate extends AbstractParserWithWordBoundaryCheck
         }
         // console.log("match[1]", match[1]," match[2]", match[2], " match[3]",match[3])
         let timeStart = parseHHmm(match[TIME_START]);
-        // let timeEnd = parseHHmm(match[TIME_END]);
-        // let dateUnit = parseDDMMYY(match[DATE_GROUP]);
+        let timeEnd = parseHHmm(match[TIME_END]);
+        let dateUnit = parseDDMMYY(match[DATE_GROUP]);
 
         result.start.imply("hour", timeStart.hour);
         result.start.imply("minute", timeStart.minute);
-        // result.start.imply("day", dateUnit.d);
-        // result.start.imply("month", dateUnit.month);
-        // result.start.imply("year", dateUnit.year);
+        result.start.imply("day", dateUnit.d);
+        result.start.imply("month", dateUnit.month);
+        result.start.imply("year", dateUnit.year);
         result.end = result.start.clone();
-        // result.end.assign("hour", timeEnd.hour);
-        // result.end.assign("minute", timeEnd.minute);
+        result.end.assign("hour", timeEnd.hour);
+        result.end.assign("minute", timeEnd.minute);
         console.log("RangeTimeDate");
         return result;
     }
