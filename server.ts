@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {router} from './routes/route';
 // const express = require('express');
-const port = 3001;
+const port = 3000 || 80;
 // const bodyParser = require('body-parser');
 // const routes = require('./routes/route')
 const app = express();

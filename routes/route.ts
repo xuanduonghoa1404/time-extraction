@@ -7,7 +7,7 @@ app.get('/time', async (req, res) => {
       let text = req.query.text;
         let timeFromText = chrono.vi.parse(text, new Date());
         console.log(timeFromText);
-        res.json({ time: timeFromText});
+        res.json(timeFromText);
       } catch (error) {
         res.status(400).json({ message: error.message });
       }
